@@ -1,0 +1,10 @@
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\bin\Debug\Diccionario de archivos.exe.config
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\bin\Debug\Diccionario de archivos.exe
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\bin\Debug\Diccionario de archivos.pdb
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\obj\Debug\Diccionario de archivos.csprojResolveAssemblyReference.cache
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\obj\Debug\Diccionario_de_archivos.Form1.resources
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\obj\Debug\Diccionario_de_archivos.Properties.Resources.resources
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\obj\Debug\Diccionario de archivos.csproj.GenerateResource.Cache
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\obj\Debug\Diccionario de archivos.exe
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\obj\Debug\Diccionario de archivos.pdb
+C:\Users\Cristo\Desktop\Diccionario de archivos\Diccionario de archivos\obj\Debug\Diccionario_de_archivos.Pruebas.resources
