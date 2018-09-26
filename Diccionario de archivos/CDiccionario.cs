@@ -61,7 +61,7 @@ namespace Diccionario_de_archivos
                                 archivo.insertaEntidad(EN, Name);
                                 archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
                                 band = 1;
-                                Console.Write("Caso 1");
+                                //Console.Write("Caso 1");
                             }
                             else
                             {
@@ -75,7 +75,7 @@ namespace Diccionario_de_archivos
                                     archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
                                     lista_Ent.Insert(0, EN);
                                     band = 1;
-                                    Console.Write("Caso 2");
+                                   // Console.Write("Caso 2");
                                 }
                                 else
                                 {
@@ -87,7 +87,7 @@ namespace Diccionario_de_archivos
                                     archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
                                     archivo.modifica_ent_sig(lista_Ent[index - 2].Ptr_entidad, Name, lista_Ent[index - 2]);
                                     band = 1;
-                                    Console.Write("Caso 3");
+                                    //Console.Write("Caso 3");
                                 }
                             }
                             break;
@@ -102,13 +102,76 @@ namespace Diccionario_de_archivos
                         archivo.insertaEntidad(EN, Name);
                         archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
                         archivo.modifica_ent_sig(lista_Ent[count - 1].Ptr_entidad, Name, lista_Ent[count - 1]);
-                        Console.Write("Caso 4");
+                        //Console.Write("Caso 4");
                     }
 
                 }
             }
 
             
+        }
+
+        public void Inserta_Atributo(CAtributo AT, CEntidad EN)
+        {
+            if (EN.Ptr_atrib == -1)
+            {
+                EN.Ptr_atrib = dimeTamArch(Name);
+
+                archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
+                AT.Direccion = dimeTamArch(Name);
+                AT.Sig_Atributo = -1;
+                EN.Lista_Atrb.Add(AT);
+                archivo.insertaAtributo(AT, Name);
+                //Console.Write("CASO 1 \n");
+            }
+            else
+            {
+                AT.Direccion = dimeTamArch(Name);
+                AT.Sig_Atributo = -1;
+                int tam = EN.Lista_Atrb.Count();
+                //Console.Write(tam + " \n");
+                EN.Lista_Atrb[tam - 1].Sig_Atributo = AT.Direccion;  //Modificar el atributo anterio su direccion soguiente en el archivo para que haga el link
+                Archivo.modifica_atri_sig(EN.Lista_Atrb[tam - 1].Direccion, Name, EN.Lista_Atrb[tam - 1]);
+                Console.Write(EN.Lista_Atrb[tam - 1].Direccion + " \n");
+                EN.Lista_Atrb.Add(AT);
+                archivo.insertaAtributo(AT, Name);
+                //Console.Write("CASO 2 \n");
+            }
+        }
+
+        public void Inserta_Registro(CRegistro REG, CEntidad EN, string Name_Reg)
+        {
+            string nombre = " ";
+            int i = 0;
+            while (Name_Reg[i] != ' ')
+            {
+                nombre += Name_Reg[i];
+                Console.Write(Name_Reg[i] + "\n");
+                i++;
+            }
+            nombre += ".dat";
+            Console.Write("Nombre del nuevo registro: " + nombre + "\n");
+
+            if (EN.Ptr_datos == 0)
+            {
+                EN.Ptr_datos = 1; //Si es 1 Quiere decir que ya tiene datos la entidad
+                                  //archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
+                archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
+                REG.Reg_dir = 0;
+                REG.Reg_sig = -1;
+                archivo.creaRegistro(nombre, REG, EN);
+                Console.Write("CASO 1 de REGISTROS");
+            }
+            else
+            {
+                REG.Reg_dir = dimeTamArch(nombre);
+                REG.Reg_sig = -1;
+                int tam = EN.Lista_Registros.Count;
+                EN.Lista_Registros[tam-2].Reg_sig = REG.Reg_dir;
+                Archivo.modifica_reg_sig(EN.Lista_Registros[tam-2].Reg_dir, nombre, EN, EN.Lista_Registros[tam-2]);
+                archivo.insertaRegistro(REG, nombre, EN);
+                Console.Write("CASO 2 de REGISTROS");
+            }
         }
 
         public void Elimina_Entidad(CEntidad ent_remove)
@@ -205,37 +268,23 @@ namespace Diccionario_de_archivos
             }
         }
 
-        public void Inserta_Atributo(CAtributo AT, CEntidad EN)
+        public void Consulta_Registros(CEntidad EN)
         {
-            if(EN.Ptr_atrib == -1)
+            string nombre = " ";
+            int i = 0;
+            while (EN.Nombre[i] != ' ')
             {
-                EN.Ptr_atrib = dimeTamArch();
-
-                archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
-                AT.Direccion = dimeTamArch();
-                AT.Sig_Atributo = -1;
-                EN.Lista_Atrb.Add(AT);
-                archivo.insertaAtributo(AT, Name);
-                //Console.Write("CASO 1 \n");
+                nombre += EN.Nombre[i];
+                Console.Write(EN.Nombre[i] + "\n");
+                i++;
             }
-            else
-            {
-                AT.Direccion = dimeTamArch();
-                AT.Sig_Atributo = -1;
-                int tam = EN.Lista_Atrb.Count();
-                //Console.Write(tam + " \n");
-                EN.Lista_Atrb[tam - 1].Sig_Atributo = AT.Direccion;  //Modificar el atributo anterio su direccion soguiente en el archivo para que haga el link
-                Archivo.modifica_atri_sig(EN.Lista_Atrb[tam - 1].Direccion, Name, EN.Lista_Atrb[tam - 1]);
-                Console.Write(EN.Lista_Atrb[tam - 1].Direccion + " \n");
-                EN.Lista_Atrb.Add(AT);
-                archivo.insertaAtributo(AT, Name);
-                //Console.Write("CASO 2 \n");
-            }
+            nombre += ".dat";
+            archivo.leeRegistros(0, nombre, EN);
         }
 
-        public long dimeTamArch()
+        public long dimeTamArch(string NameA)
         {
-            long dato = archivo.dimeTamArch(Name);
+            long dato = archivo.dimeTamArch(NameA);
             return dato;
         }
 
@@ -249,6 +298,18 @@ namespace Diccionario_de_archivos
 
             //Console.Write(tamString + "\n");
            // Console.Write(name + "\n");
+            return name;
+        }
+
+        public string rellenaStringTAM(string name, int tam)
+        {
+            int tamString = name.Length;
+            for (int i = tamString; i < tam; i++)
+            {
+                name += " ";
+            }
+            //Console.Write(tamString + "\n");
+            // Console.Write(name + "\n");
             return name;
         }
 

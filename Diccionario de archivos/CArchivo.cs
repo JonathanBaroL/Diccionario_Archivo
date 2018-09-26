@@ -23,7 +23,6 @@ namespace Diccionario_de_archivos
             Lista_Ent = new List<CEntidad>();
         }
 
-
         public void insertaEntidad(CEntidad ent, string nameArch)
         {
             try
@@ -59,6 +58,41 @@ namespace Diccionario_de_archivos
                     escribe.Write(AT.Indice);
                     escribe.Write(AT.Dir_Indice);
                     escribe.Write(AT.Sig_Atributo);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void insertaRegistro(CRegistro REG, string nameArch, CEntidad ENTIDAD)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
+                {
+                    escribe.Seek(0, SeekOrigin.End);
+                    escribe.Write(REG.Reg_dir);
+                    int i = 0;
+                    foreach(CAtributo ATR in ENTIDAD.Lista_Atrb)
+                    {
+                        switch (ATR.Tipo)
+                        {
+                            case 'I'://INT
+                                int datoI = Convert.ToInt32(REG.Lista_Atributos[i]);
+                                escribe.Write(datoI);
+                                i++;
+                                break;
+                            case 'S'://String
+                                string datoS = REG.Lista_Atributos[i].ToString();
+                                escribe.Write(datoS);
+                                i++;
+                                break;
+                        }
+                    }
+                    escribe.Write(REG.Reg_sig);
                 }
 
             }
@@ -110,14 +144,14 @@ namespace Diccionario_de_archivos
 
         public void leeAtributos(long dir_apuntador, string nameArch, CEntidad entidadAux)
         {
-            Console.Write(dir_apuntador + " Esta es la direccion del apuntador\n");
+            //Console.Write(dir_apuntador + " Esta es la direccion del apuntador\n");
             if (dir_apuntador != -1)
             {
                 try
                 {
 
                     FileStream file = new FileStream(nameArch, FileMode.Open, FileAccess.Read);
-                    Console.Write(dir_apuntador + " Esta es la direccion ya de busqueda\n");
+                    //Console.Write(dir_apuntador + " Esta es la direccion ya de busqueda\n");
                     file.Seek(dir_apuntador, SeekOrigin.Current);
                     using (BinaryReader leer = new BinaryReader(file))
                     {
@@ -140,9 +174,9 @@ namespace Diccionario_de_archivos
                         ATRI.Sig_Atributo = leer.ReadInt64();
 
                         entidadAux.Lista_Atrb.Add(ATRI);
-                        Console.Write(ATRI.Direccion + "\n");
-                        Console.Write(ATRI.Nombre + "\n");
-                        Console.Write(ATRI.Sig_Atributo + "\n");
+                        //Console.Write(ATRI.Direccion + "\n");
+                        //Console.Write(ATRI.Nombre + "\n");
+                        //Console.Write(ATRI.Sig_Atributo + "\n");
                         leeAtributos(ATRI.Sig_Atributo, nameArch, entidadAux);
                         
                     }
@@ -152,6 +186,92 @@ namespace Diccionario_de_archivos
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        public void leeRegistros(long dir_apuntador, string nameArch, CEntidad ENTIDAD)
+        {
+            Console.Write(dir_apuntador + " Esta es la direccion del apuntador\n");
+            if (dir_apuntador != -1)
+            {
+                try
+                {
+
+                    FileStream file = new FileStream(nameArch, FileMode.Open, FileAccess.Read);
+                    Console.Write(dir_apuntador + " Esta es la direccion ya de busqueda\n");
+                    file.Seek(dir_apuntador, SeekOrigin.Current);
+                    using (BinaryReader leer = new BinaryReader(file))
+                    {
+
+                        CRegistro REG = new CRegistro();
+
+                        REG.Reg_dir = leer.ReadInt64();
+                        int i = 0;
+                        foreach (CAtributo ATR in ENTIDAD.Lista_Atrb)
+                        {
+                            switch (ATR.Tipo)
+                            {
+                                case 'I'://INT
+                                    int datoI = leer.ReadInt32();
+                                    REG.Lista_Atributos.Add(datoI);
+                                    i++;
+                                    break;
+                                case 'S'://String
+                                    string datoS = leer.ReadString(); ;
+                                    REG.Lista_Atributos.Add(datoS);
+                                    i++;
+                                    break;
+                            }
+                        }
+                        REG.Reg_sig = leer.ReadInt64();
+
+
+
+                        ENTIDAD.Lista_Registros.Add(REG);
+                        leeRegistros(REG.Reg_sig, nameArch, ENTIDAD);
+
+                    }
+                    file.Close();
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        public void modifica_reg_sig(long apuntador, string nameArch, CEntidad ENTIDAD, CRegistro REG)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
+                {
+                    escribe.Seek(Convert.ToInt32(apuntador), SeekOrigin.Current);
+                    escribe.Write(REG.Reg_dir);
+                    int i = 0;
+                    foreach (CAtributo ATR in ENTIDAD.Lista_Atrb)
+                    {
+                        switch (ATR.Tipo)
+                        {
+                            case 'I'://INT
+                                int datoI = Convert.ToInt32(REG.Lista_Atributos[i]);
+                                escribe.Write(datoI);
+                                i++;
+                                break;
+                            case 'S'://String
+                                string datoS = REG.Lista_Atributos[i].ToString();
+                                escribe.Write(datoS);
+                                i++;
+                                break;
+                        }
+                    }
+                    escribe.Write(REG.Reg_sig);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -222,6 +342,41 @@ namespace Diccionario_de_archivos
             long t = archivo.Seek(0, SeekOrigin.End);
             archivo.Close();
             return t;
+        }
+
+        public void creaRegistro(string nameArch, CRegistro REG, CEntidad ENTIDAD)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.OpenOrCreate)))
+                {
+                    escribe.Seek(0, SeekOrigin.Begin);
+                    escribe.Write(REG.Reg_dir);
+                    int i = 0;
+                    foreach (CAtributo ATR in ENTIDAD.Lista_Atrb)
+                    {
+                        switch (ATR.Tipo)
+                        {
+                            case 'I'://INT
+                                int datoI = Convert.ToInt32(REG.Lista_Atributos[i]);
+                                escribe.Write(datoI);
+                                i++;
+                                break;
+                            case 'S'://String
+                                string datoS = REG.Lista_Atributos[i].ToString();
+                                escribe.Write(datoS);
+                                i++;
+                                break;
+                        }
+                    }
+                    escribe.Write(REG.Reg_sig);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public string Nombre

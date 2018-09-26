@@ -36,18 +36,21 @@
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnAddReg = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnTXT = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cBox_Entidades2 = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
             this.dataGridView_atributos = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -155,23 +158,44 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.DimGray;
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Controls.Add(this.label5);
             this.tabPage3.Controls.Add(this.dataGridView3);
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.dataGridView2);
-            this.tabPage3.Controls.Add(this.button2);
+            this.tabPage3.Controls.Add(this.btnAddReg);
             this.tabPage3.Controls.Add(this.button3);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.button4);
-            this.tabPage3.Controls.Add(this.button5);
+            this.tabPage3.Controls.Add(this.btnTXT);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.cBox_Entidades2);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1230, 438);
+            this.tabPage3.Size = new System.Drawing.Size(1273, 629);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Registro";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(89, 99);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(507, 17);
+            this.label7.TabIndex = 43;
+            this.label7.Text = "Para agregar un registro llena los campos del dataGrid, y luego da en agregar.";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(89, 13);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(1069, 17);
+            this.label6.TabIndex = 42;
+            this.label6.Text = "Actualmente los registros se estan guardando en la carpeta debug, pero aun no se " +
+    "pueden recuperar, todo se guarda pero en memoria, recupera y guarda en memoria";
             // 
             // label5
             // 
@@ -189,7 +213,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(120, 312);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.RowTemplate.Height = 24;
-            this.dataGridView3.Size = new System.Drawing.Size(812, 123);
+            this.dataGridView3.Size = new System.Drawing.Size(812, 293);
             this.dataGridView3.TabIndex = 40;
             // 
             // label4
@@ -211,15 +235,15 @@
             this.dataGridView2.Size = new System.Drawing.Size(812, 106);
             this.dataGridView2.TabIndex = 38;
             // 
-            // button2
+            // btnAddReg
             // 
-            this.button2.Location = new System.Drawing.Point(430, 64);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 32);
-            this.button2.TabIndex = 33;
-            this.button2.Text = "Agregar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnAddReg.Location = new System.Drawing.Point(430, 64);
+            this.btnAddReg.Name = "btnAddReg";
+            this.btnAddReg.Size = new System.Drawing.Size(119, 32);
+            this.btnAddReg.TabIndex = 33;
+            this.btnAddReg.Text = "Agregar";
+            this.btnAddReg.UseVisualStyleBackColor = true;
+            this.btnAddReg.Click += new System.EventHandler(this.btnAddReg_Click);
             // 
             // button3
             // 
@@ -249,14 +273,15 @@
             this.button4.Text = "Modificar";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnTXT
             // 
-            this.button5.Location = new System.Drawing.Point(805, 64);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(119, 32);
-            this.button5.TabIndex = 36;
-            this.button5.Text = "Consultar";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnTXT.Location = new System.Drawing.Point(805, 64);
+            this.btnTXT.Name = "btnTXT";
+            this.btnTXT.Size = new System.Drawing.Size(119, 32);
+            this.btnTXT.TabIndex = 36;
+            this.btnTXT.Text = "Consultar";
+            this.btnTXT.UseVisualStyleBackColor = true;
+            this.btnTXT.Click += new System.EventHandler(this.btnTXT_Click);
             // 
             // label2
             // 
@@ -279,6 +304,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Gray;
+            this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.dataGridView_atributos);
             this.tabPage2.Controls.Add(this.btnAgregar2);
             this.tabPage2.Controls.Add(this.lbTIndice);
@@ -298,9 +324,20 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1230, 438);
+            this.tabPage2.Size = new System.Drawing.Size(1273, 629);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Atributos";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(46, 67);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(1027, 17);
+            this.label8.TabIndex = 44;
+            this.label8.Text = "Para modoficar un atributo da click en el datagrid en uno y se cargaran los datos" +
+    " arriba a continuacion modificale lo que necesitas y da click en el boton modifi" +
+    "car";
             // 
             // dataGridView_atributos
             // 
@@ -445,7 +482,7 @@
             this.numLongi.Size = new System.Drawing.Size(47, 22);
             this.numLongi.TabIndex = 24;
             this.numLongi.Value = new decimal(new int[] {
-            30,
+            4,
             0,
             0,
             0});
@@ -474,6 +511,7 @@
             this.cboxTipo.TabIndex = 23;
             this.cboxTipo.Text = "I";
             this.cboxTipo.Visible = false;
+            this.cboxTipo.TextChanged += new System.EventHandler(this.cboxTipo_TextChanged);
             // 
             // btn_Eliminar2
             // 
@@ -536,7 +574,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1230, 438);
+            this.tabPage1.Size = new System.Drawing.Size(1273, 629);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Entidades";
             // 
@@ -688,7 +726,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 42);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1238, 467);
+            this.tabControl1.Size = new System.Drawing.Size(1281, 658);
             this.tabControl1.TabIndex = 31;
             // 
             // Form1
@@ -732,11 +770,15 @@
         private System.Windows.Forms.ToolStripMenuItem abrirDiccionarioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cerrarDiccionarioToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button btnAddReg;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnTXT;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cBox_Entidades2;
         private System.Windows.Forms.TabPage tabPage2;
@@ -781,10 +823,9 @@
         private System.Windows.Forms.Label lb_Modifica;
         private System.Windows.Forms.Button btn_ok;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
     }
 }
 
