@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Diccionario_de_archivos
 {
@@ -152,25 +153,165 @@ namespace Diccionario_de_archivos
             nombre += ".dat";
             Console.Write("Nombre del nuevo registro: " + nombre + "\n");
 
-            if (EN.Ptr_datos == 0)
+            if (EN.Ptr_datos == 0 || EN.Lista_Registros.Count() == 1)
             {
+                Console.Write("CASO 1 de REGISTROS");
                 EN.Ptr_datos = 1; //Si es 1 Quiere decir que ya tiene datos la entidad
                                   //archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
                 archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
                 REG.Reg_dir = 0;
                 REG.Reg_sig = -1;
                 archivo.creaRegistro(nombre, REG, EN);
-                Console.Write("CASO 1 de REGISTROS");
             }
             else
             {
+                Console.Write("CASO 2 de REGISTROS " + EN.Lista_Registros.Count());
                 REG.Reg_dir = dimeTamArch(nombre);
                 REG.Reg_sig = -1;
                 int tam = EN.Lista_Registros.Count;
                 EN.Lista_Registros[tam-2].Reg_sig = REG.Reg_dir;
                 Archivo.modifica_reg_sig(EN.Lista_Registros[tam-2].Reg_dir, nombre, EN, EN.Lista_Registros[tam-2]);
                 archivo.insertaRegistro(REG, nombre, EN);
-                Console.Write("CASO 2 de REGISTROS");
+            }
+        }
+        
+        public void Inserta_Registro2(CRegistro REG, CEntidad EN, string Name_Reg)
+        {
+            string aux = EN.Nombre;
+            EN.Nombre = rellenaString(aux);
+
+            string nombre = " ";
+            int i = 0;
+            while (Name_Reg[i] != ' ')
+            {
+                nombre += Name_Reg[i];
+                Console.Write(Name_Reg[i] + "\n");
+                i++;
+            }
+            nombre += ".dat";
+            Console.Write("Nombre del nuevo registro: " + nombre + "\n");
+
+            if (EN.Ptr_datos > 0 && EN.Lista_Registros.Count == 0)
+            {
+                EN.Lista_Registros.Add(REG);
+                EN.Ptr_datos = 0;
+            }
+            else
+            {
+
+
+                if (EN.Ptr_datos == 0 && EN.Lista_Registros.Count == 0)
+                {
+                    //Console.Write("caso 0");
+                    MessageBox.Show("caso 0");
+                    EN.Lista_Registros.Add(REG);
+                    EN.Ptr_datos = 0;
+                    REG.Reg_dir = 0;
+                    REG.Reg_sig = -1;
+                    archivo.creaRegistro(nombre, REG, EN);
+                }
+                
+                /// 
+                else
+                {
+                    ///metodo para saber como ordenar
+
+                    int pos = 0;
+
+                    for(int i2 = 0; i2 < EN.Lista_Atrb.Count; i2++)
+                    {
+                        if (EN.Lista_Atrb[i2].Indice == 1)
+                        {
+                            pos = i2;
+                            break;
+                        }
+                    }
+
+
+                    int index = 0;
+                    int band = 0;
+                    foreach (CRegistro reg in EN.Lista_Registros)
+                    {
+                        Int32 val = string.Compare(REG.Lista_Atributos[pos].ToString(), reg.Lista_Atributos[pos].ToString());
+                        if (val < 0)
+                        {
+                            if (EN.Lista_Registros.Count < 2)
+                            {
+                                REG.Reg_sig = EN.Lista_Registros[index].Reg_dir;
+                                EN.Ptr_datos = dimeTamArch(nombre);
+                                foreach(CEntidad ent in lista_Ent)
+                                {
+                                    if(EN.Nombre == ent.Nombre)
+                                    {
+                                        ent.Prt_ent_sig = EN.Prt_ent_sig;
+                                        break;
+                                    }
+                                }
+
+                                MessageBox.Show("direccion a dato" + EN.Ptr_datos);
+                                archivo.modifica_ent_sig(EN.Ptr_entidad, name, EN);
+                                index++;
+                                EN.Lista_Registros.Insert(index - 1, REG);
+                                archivo.insertaRegistro(REG, nombre, EN);
+                                archivo.modifica_reg_sig(REG.Reg_dir, nombre, EN, REG);
+                                band = 1;
+
+
+
+                                //Console.Write("Caso 1");
+                                MessageBox.Show("caso 1");
+                            }
+                            else
+                            {
+                                if (index < 1)
+                                {
+                                    EN.Ptr_datos = REG.Reg_dir;
+                                    REG.Reg_sig = EN.Lista_Registros[0].Reg_dir;
+
+                                    archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
+                                    archivo.insertaRegistro(REG, nombre, EN);
+                                    archivo.modifica_reg_sig(REG.Reg_dir, nombre, EN, REG);
+                                    EN.Lista_Registros.Insert(0, REG);
+                                    band = 1;
+
+                                    MessageBox.Show("caso 2");
+                                    //Console.Write("Caso 2");
+                                }
+                                else
+                                {
+                                    REG.Reg_sig = EN.Lista_Registros[index].Reg_dir;
+                                    EN.Lista_Registros[index - 1].Reg_sig = REG.Reg_dir;
+                                    index++;
+                                    EN.Lista_Registros.Insert(index - 1, REG);
+
+                                    archivo.insertaRegistro(REG, nombre, EN);
+                                    archivo.modifica_reg_sig(REG.Reg_dir, nombre, EN, REG);
+                                    archivo.modifica_reg_sig(EN.Lista_Registros[index - 2].Reg_dir, nombre, EN, EN.Lista_Registros[index - 2]);
+                                    band = 1;
+
+                                    MessageBox.Show("caso 3");
+                                    //Console.Write("Caso 3");
+                                }
+                            }
+                            break;
+                        }
+                        index++;
+                    }
+                    if (band == 0)
+                    {
+                        int count = EN.Lista_Registros.Count();
+
+                        EN.Lista_Registros[count - 1].Reg_sig = REG.Reg_dir;
+                        EN.Lista_Registros.Add(REG);
+                        Archivo.insertaRegistro(REG, nombre, EN);
+                        Archivo.modifica_reg_sig(REG.Reg_dir, nombre, EN, REG);
+                        Archivo.modifica_reg_sig(EN.Lista_Registros[count - 1].Reg_dir, nombre, EN, EN.Lista_Registros[count - 1]);
+
+                        MessageBox.Show("caso 4");
+                        //Console.Write("Caso 4");
+                    }
+
+                }
             }
         }
 
@@ -232,6 +373,38 @@ namespace Diccionario_de_archivos
             }
         }
 
+        public void Elimina_Registro(CRegistro reg, CEntidad ent)
+        {
+            string nombre = " ";
+            string Name_Reg = ent.Nombre;
+            int i = 0;
+            while (Name_Reg[i] != ' ')
+            {
+                nombre += Name_Reg[i];
+                Console.Write(Name_Reg[i] + "\n");
+                i++;
+            }
+            nombre += ".dat";
+            Console.Write("Registro a eliminar... " + nombre);
+
+            /** if (Ent.Ptr_atrib == atri_remove.Direccion)
+             {
+                 Ent.Ptr_atrib = atri_remove.Sig_Atributo;
+                 archivo.modifica_ent_sig(Ent.Ptr_entidad, nombre, Ent);
+                 Ent.Lista_Atrb.Remove(atri_remove);
+                 Console.Write("Exito caso 1");
+             }
+             else
+             {
+                 int position = Ent.Lista_Atrb.IndexOf(atri_remove);
+                 Ent.Lista_Atrb[position - 1].Sig_Atributo = atri_remove.Sig_Atributo;
+                 archivo.modifica_atri_sig(Ent.Lista_Atrb[position - 1].Direccion, nombre, Ent.Lista_Atrb[position - 1]);
+                 Ent.Lista_Atrb.Remove(atri_remove);
+                 Console.Write("Exito caso 2");
+             }*/
+
+        }
+
         public void Modifica_Entidad(CEntidad ent_modificar, string modicacion)
         {
             CEntidad newE = new CEntidad();
@@ -279,7 +452,11 @@ namespace Diccionario_de_archivos
                 i++;
             }
             nombre += ".dat";
-            archivo.leeRegistros(0, nombre, EN);
+
+
+            archivo.leeRegistros(EN.Ptr_datos, nombre, EN);
+
+
         }
 
         public long dimeTamArch(string NameA)
@@ -304,7 +481,7 @@ namespace Diccionario_de_archivos
         public string rellenaStringTAM(string name, int tam)
         {
             int tamString = name.Length;
-            for (int i = tamString; i < tam; i++)
+            for (int i = tamString; i < tam-1; i++)
             {
                 name += " ";
             }

@@ -228,6 +228,7 @@ namespace Diccionario_de_archivos
 
 
                         ENTIDAD.Lista_Registros.Add(REG);
+
                         leeRegistros(REG.Reg_sig, nameArch, ENTIDAD);
 
                     }
@@ -235,7 +236,7 @@ namespace Diccionario_de_archivos
                 }
                 catch (Exception ex)
                 {
-                    //MessageBox.Show(ex.Message);
+                    //MessageBox.Show();
                 }
             }
         }

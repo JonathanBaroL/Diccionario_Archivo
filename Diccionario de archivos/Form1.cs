@@ -19,6 +19,7 @@ namespace Diccionario_de_archivos
         public string nameArch2;
         public CDiccionario diccionario_datos;
         private FileStream archivo;
+        private CRegistro removeRegistro;
         private string atributo;
         int lx, ly;
         int sw, sh;
@@ -477,28 +478,57 @@ namespace Diccionario_de_archivos
                     if (ENT.Lista_Registros.Count() == 0)
                     {
                         //MessageBox.Show("Vamos a consultar registros");
+                        diccionario_datos.Consulta_Registros(ENT);
 
-                            diccionario_datos.Consulta_Registros(ENT);
+
+                        dataGridView1.Rows.Clear();
+                        foreach (CEntidad enti in diccionario_datos.Lista_Ent)
+                        {
+                            dataGridView1.Rows.Add(enti.Ptr_entidad, enti.Nombre, enti.Prt_ent_sig, enti.Ptr_atrib, enti.Ptr_datos);
+                        }
                     }
 
+                   /*DataGridViewTextBoxColumn columnaaux1 = new DataGridViewTextBoxColumn();
+                    DataGridViewTextBoxColumn columnaaux2 = new DataGridViewTextBoxColumn();
+                    columnaaux1.HeaderText = "Direccion";
+                    columnaaux2.HeaderText = "Direccion";
+                    dataGridView2.Columns.Add(columnaaux1);
+                    dataGridView2.Width += columnaaux1.Width;
+                    dataGridView3.Columns.Add(columnaaux2);
+                    dataGridView3.Width += columnaaux1.Width;*/
                     foreach (CAtributo ATR in ENT.Lista_Atrb)
                     {
+
                         DataGridViewTextBoxColumn columna = new DataGridViewTextBoxColumn();
                         DataGridViewTextBoxColumn columna2 = new DataGridViewTextBoxColumn();
+
                         columna.HeaderText = ATR.Nombre;
                         columna2.HeaderText = ATR.Nombre;
+
+
                         dataGridView2.Columns.Add(columna);
                         dataGridView2.Width += columna.Width;
                         dataGridView3.Columns.Add(columna2);
                         dataGridView3.Width += columna.Width;
                     }
+                   /* columna.HeaderText = "Direccion siguiente";
+                    columna2.HeaderText = "Direccion siguiente";
+                    dataGridView2.Columns.Add(columna);
+                    dataGridView2.Width += columna.Width;
+                    dataGridView3.Columns.Add(columna2);
+                    dataGridView3.Width += columna.Width;*/
+
+
                     for (int j = 0; j < ENT.Lista_Registros.Count; j++)
                     {
                         for (int i = 0; i < dataGridView3.Columns.Count; i++)
                         {
                             dataGridView3.Rows.Add();
+                            //dataGridView3.Rows[j].Cells[0].Value = ENT.Lista_Registros[j].Reg_dir;
+                            //MessageBox.Show("paro");
                             //MessageBox.Show(ENT.Lista_Registros[j].Lista_Atributos[i].ToString());
                             dataGridView3.Rows[j].Cells[i].Value = ENT.Lista_Registros[j].Lista_Atributos[i];
+                            //MessageBox.Show("paro2");
                         }
                         //MessageBox.Show("SALI");
                     }
@@ -527,18 +557,18 @@ namespace Diccionario_de_archivos
                 {
                     case 'I'://INT
                         int datoI = Convert.ToInt32(dataGridView2.Rows[0].Cells[i].Value);
-                        //MessageBox.Show("DATO:  " + datoI);
+                        //MessageBox.Show(datoI);
                         reg.Lista_Atributos.Add(datoI);
 
                         break;
                     case 'S'://String
                         string datoS = dataGridView2.Rows[0].Cells[i].Value.ToString();
                         //MessageBox.Show("DATO:  " + datoS);
-                        datoS = diccionario_datos.rellenaStringTAM(datoS, ENTIDAD.Lista_Atrb[i].Tamaño);
-                        reg.Lista_Atributos.Add(datoS);
+                        string newString = diccionario_datos.rellenaStringTAM(datoS, ENTIDAD.Lista_Atrb[i].Tamaño);
+                        reg.Lista_Atributos.Add(newString);
                         break;
                 }
-            }
+            }   
             if (ENTIDAD.Lista_Registros.Count == 0)
             {
                 ENTIDAD.Lista_Registros.Add(reg);
@@ -567,10 +597,8 @@ namespace Diccionario_de_archivos
                 for (int i = 0; i < dataGridView3.Columns.Count; i++)
                 {
                     dataGridView3.Rows.Add();
-                    //MessageBox.Show(ENTIDAD.Lista_Registros[j].Lista_Atributos[i].ToString());
                     dataGridView3.Rows[j].Cells[i].Value = ENTIDAD.Lista_Registros[j].Lista_Atributos[i];
                 }
-                //MessageBox.Show("SALI");
             }
             dataGridView2.Rows.Clear();
         }
@@ -600,7 +628,8 @@ namespace Diccionario_de_archivos
                 //MessageBox.Show(nameArch2);
                 dataGridView3.Columns.Clear();
                 dataGridView3.Width = 45;
-
+                lbCharge.Visible = true;
+                int charge = 0;
 
                 foreach (CEntidad ENTIDAD in diccionario_datos.Lista_Ent)
                 {
@@ -689,7 +718,6 @@ namespace Diccionario_de_archivos
                                     //MessageBox.Show("ESTOY AQUI");
                                     ENTIDAD.Lista_Registros.Add(REG);
                                     diccionario_datos.Inserta_Registro(REG, ENTIDAD, ENTIDAD.Nombre);
-
                                     dataGridView1.Rows.Clear();
                                     foreach (CEntidad enti in diccionario_datos.Lista_Ent)
                                     {
@@ -731,9 +759,12 @@ namespace Diccionario_de_archivos
                                 //MessageBox.Show(ENT.Lista_Registros[j].Lista_Atributos[i].ToString());
                                 dataGridView3.Rows[o].Cells[u].Value = ENTIDAD.Lista_Registros[o].Lista_Atributos[u];
                             }
+                            lbCharge.Visible = true;
+                            charge++;
+                          
+                            lbCharge.Text = charge.ToString();
                             //MessageBox.Show("SALI");
                         }
-
                         break;
                     }
                 }
@@ -744,7 +775,65 @@ namespace Diccionario_de_archivos
             }
         }
 
-        private void btnAgregar2_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
+        {
+            CEntidad ENTIDAD = new CEntidad();
+
+            foreach (CEntidad ENT in diccionario_datos.Lista_Ent)
+            {
+                if (cBox_Entidades2.Text == ENT.Nombre)
+                {
+                    ENTIDAD = ENT;
+                    break;
+                }
+            }
+
+            diccionario_datos.Elimina_Registro(removeRegistro, ENTIDAD);
+        }
+
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                CEntidad ENTIDAD = new CEntidad();
+
+                foreach (CEntidad ENT in diccionario_datos.Lista_Ent)
+                {
+                    if (cBox_Entidades2.Text == ENT.Nombre)
+                    {
+                        ENTIDAD = ENT;
+                        break;
+                    }
+                }
+
+                int tam = ENTIDAD.Lista_Atrb.Count();
+
+                for (int i = 0; i < tam; i++)
+                {
+                    dataGridView2.Rows[0].Cells[i].Value = dataGridView3.Rows[e.RowIndex].Cells[i].Value;
+                }
+
+                foreach(CRegistro reg in ENTIDAD.Lista_Registros)
+                {
+                    if (reg.Lista_Atributos[0] == dataGridView2.Rows[0].Cells[0].Value)
+                    {
+                        removeRegistro = reg;
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAgregar2_Click_1(object sender, EventArgs e)
         {
             int igual = 0;
             if (cBox_Entidades1.Text != "" && tbNaAtri.TextLength > 0)
@@ -756,12 +845,22 @@ namespace Diccionario_de_archivos
                     {
                         foreach (CAtributo ATRIBUTO in ENT.Lista_Atrb)
                         {
-                            if (ATRIBUTO.Nombre == diccionario_datos.rellenaString( tbNaAtri.Text))
+                            if (ATRIBUTO.Nombre == diccionario_datos.rellenaString(tbNaAtri.Text))
                             {
                                 MessageBox.Show("Ya existe el atributo");
                                 igual = 1;
                                 break;
                             }
+                            if (numericIndice.Value == 1)
+                            {
+                                if (ATRIBUTO.Indice == numericIndice.Value)
+                                {
+                                    MessageBox.Show("indice ya registrado");
+                                    igual = 1;
+                                    break;
+                                }
+                            }
+
                         }
                         break;
                     }
@@ -808,6 +907,100 @@ namespace Diccionario_de_archivos
             {
                 MessageBox.Show("LLena los campos correspondientes");
             }
+        }
+
+        private void bntAddReg2_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.Rows[0].Cells[0].Value != null)
+            {
+                CRegistro reg = new CRegistro();
+                CEntidad ENTIDAD = new CEntidad();
+
+                foreach (CEntidad ENT in diccionario_datos.Lista_Ent)
+                {
+                    if (cBox_Entidades2.Text == ENT.Nombre)
+                    {
+                        ENTIDAD = ENT;
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < dataGridView2.Columns.Count; i++)
+                {
+                    switch (ENTIDAD.Lista_Atrb[i].Tipo)
+                    {
+                        case 'I'://INT
+                            int datoI = Convert.ToInt32(dataGridView2.Rows[0].Cells[i].Value);
+                            //MessageBox.Show(datoI);
+                            reg.Lista_Atributos.Add(datoI);
+
+                            break;
+                        case 'S'://String
+                            string datoS = dataGridView2.Rows[0].Cells[i].Value.ToString();
+                            //MessageBox.Show("DATO:  " + datoS);
+                            string newString = diccionario_datos.rellenaStringTAM(datoS, ENTIDAD.Lista_Atrb[i].Tamaño);
+                            reg.Lista_Atributos.Add(newString);
+                            break;
+                    }
+                }
+
+                //ENTIDAD.Lista_Registros.Add(reg);
+                //MessageBox.Show("Lista con datos");
+
+                string Name_Reg = ENTIDAD.Nombre;
+                string nombre = " ";
+                int k = 0;
+                while (Name_Reg[k] != ' ')
+                {
+                    nombre += Name_Reg[k];
+                    Console.Write(Name_Reg[k] + "\n");
+                    k++;
+                }
+                nombre += ".dat";
+
+
+
+                //MessageBox.Show("Numero de registros: " + ENTIDAD.Lista_Registros.Count().ToString());
+                if (ENTIDAD.Lista_Registros.Count() >= 1)
+                {
+                    reg.Reg_dir = diccionario_datos.dimeTamArch(nombre);
+                    reg.Reg_sig = -1;
+                    MessageBox.Show(reg.Reg_dir.ToString());
+                }
+                else
+                {
+                    reg.Reg_dir = 0;
+                    reg.Reg_sig = -1;
+                    ENTIDAD.Ptr_datos = 0;
+                    MessageBox.Show("no hay datos");
+                }
+                diccionario_datos.Inserta_Registro2(reg, ENTIDAD, ENTIDAD.Nombre);
+                dataGridView1.Rows.Clear();
+                foreach (CEntidad enti in diccionario_datos.Lista_Ent)
+                {
+                    dataGridView1.Rows.Add(enti.Ptr_entidad, enti.Nombre, enti.Prt_ent_sig, enti.Ptr_atrib, enti.Ptr_datos);
+                }
+
+
+                for (int j = 0; j < ENTIDAD.Lista_Registros.Count; j++)
+                {
+                    for (int i = 0; i < dataGridView3.Columns.Count; i++)
+                    {
+                        dataGridView3.Rows.Add();
+                        dataGridView3.Rows[j].Cells[i].Value = ENTIDAD.Lista_Registros[j].Lista_Atributos[i];
+                    }
+                }
+                dataGridView2.Rows.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Rellena los campos");
+            }
+        }
+
+        private void btnAgregar2_click(object sender, EventArgs e)
+        {
+          
         }
 
         public void pantallaCompleta()
