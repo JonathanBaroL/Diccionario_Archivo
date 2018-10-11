@@ -36,9 +36,9 @@
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.bntAddReg2 = new System.Windows.Forms.Button();
             this.lbCharge = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
@@ -93,7 +93,10 @@
             this.lb_Modifica = new System.Windows.Forms.Label();
             this.btn_ok = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.bntAddReg2 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -163,7 +166,6 @@
             this.tabPage3.Controls.Add(this.bntAddReg2);
             this.tabPage3.Controls.Add(this.lbCharge);
             this.tabPage3.Controls.Add(this.label7);
-            this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Controls.Add(this.label5);
             this.tabPage3.Controls.Add(this.dataGridView3);
             this.tabPage3.Controls.Add(this.label4);
@@ -178,9 +180,19 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1273, 629);
+            this.tabPage3.Size = new System.Drawing.Size(1376, 629);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Registro";
+            // 
+            // bntAddReg2
+            // 
+            this.bntAddReg2.Location = new System.Drawing.Point(430, 77);
+            this.bntAddReg2.Name = "bntAddReg2";
+            this.bntAddReg2.Size = new System.Drawing.Size(119, 32);
+            this.bntAddReg2.TabIndex = 45;
+            this.bntAddReg2.Text = "Agregar2";
+            this.bntAddReg2.UseVisualStyleBackColor = true;
+            this.bntAddReg2.Click += new System.EventHandler(this.bntAddReg2_Click);
             // 
             // lbCharge
             // 
@@ -201,16 +213,6 @@
             this.label7.Size = new System.Drawing.Size(507, 17);
             this.label7.TabIndex = 43;
             this.label7.Text = "Para agregar un registro llena los campos del dataGrid, y luego da en agregar.";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(89, 13);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(1069, 17);
-            this.label6.TabIndex = 42;
-            this.label6.Text = "Actualmente los registros se estan guardando en la carpeta debug, pero aun no se " +
-    "pueden recuperar, todo se guarda pero en memoria, recupera y guarda en memoria";
             // 
             // label5
             // 
@@ -322,6 +324,10 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Gray;
+            this.tabPage2.Controls.Add(this.label11);
+            this.tabPage2.Controls.Add(this.label10);
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.dataGridView_atributos);
             this.tabPage2.Controls.Add(this.btnAgregar2);
@@ -342,7 +348,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1273, 629);
+            this.tabPage2.Size = new System.Drawing.Size(1376, 629);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Atributos";
             // 
@@ -592,7 +598,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1273, 629);
+            this.tabPage1.Size = new System.Drawing.Size(1376, 629);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Entidades";
             // 
@@ -744,18 +750,44 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 42);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1281, 658);
+            this.tabControl1.Size = new System.Drawing.Size(1384, 658);
             this.tabControl1.TabIndex = 31;
             // 
-            // bntAddReg2
+            // label6
             // 
-            this.bntAddReg2.Location = new System.Drawing.Point(430, 77);
-            this.bntAddReg2.Name = "bntAddReg2";
-            this.bntAddReg2.Size = new System.Drawing.Size(119, 32);
-            this.bntAddReg2.TabIndex = 45;
-            this.bntAddReg2.Text = "Agregar2";
-            this.bntAddReg2.UseVisualStyleBackColor = true;
-            this.bntAddReg2.Click += new System.EventHandler(this.bntAddReg2_Click);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(1141, 186);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(151, 17);
+            this.label6.TabIndex = 45;
+            this.label6.Text = "1 - Clave de búsqueda";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(1141, 169);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(151, 17);
+            this.label9.TabIndex = 46;
+            this.label9.Text = "0 - Sin indice asociado";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(1141, 203);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(206, 17);
+            this.label10.TabIndex = 47;
+            this.label10.Text = "2 - Clave de búsqueda primaria";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1161, 152);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(111, 17);
+            this.label11.TabIndex = 48;
+            this.label11.Text = "TIPO DE INDICE";
             // 
             // Form1
             // 
@@ -852,10 +884,13 @@
         private System.Windows.Forms.Button btn_ok;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lbCharge;
         private System.Windows.Forms.Button bntAddReg2;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label6;
     }
 }
 

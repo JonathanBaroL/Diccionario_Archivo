@@ -74,6 +74,8 @@ namespace Diccionario_de_archivos
                 using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
                 {
                     escribe.Seek(0, SeekOrigin.End);
+
+
                     escribe.Write(REG.Reg_dir);
                     int i = 0;
                     foreach(CAtributo ATR in ENTIDAD.Lista_Atrb)
@@ -147,7 +149,7 @@ namespace Diccionario_de_archivos
             //Console.Write(dir_apuntador + " Esta es la direccion del apuntador\n");
             if (dir_apuntador != -1)
             {
-                try
+                try 
                 {
 
                     FileStream file = new FileStream(nameArch, FileMode.Open, FileAccess.Read);
@@ -198,7 +200,7 @@ namespace Diccionario_de_archivos
                 {
 
                     FileStream file = new FileStream(nameArch, FileMode.Open, FileAccess.Read);
-                    Console.Write(dir_apuntador + " Esta es la direccion ya de busqueda\n");
+                    //Console.Write(dir_apuntador + " Esta es la direccion ya de busqueda\n");
                     file.Seek(dir_apuntador, SeekOrigin.Current);
                     using (BinaryReader leer = new BinaryReader(file))
                     {
@@ -206,7 +208,6 @@ namespace Diccionario_de_archivos
                         CRegistro REG = new CRegistro();
 
                         REG.Reg_dir = leer.ReadInt64();
-                        int i = 0;
                         foreach (CAtributo ATR in ENTIDAD.Lista_Atrb)
                         {
                             switch (ATR.Tipo)
@@ -214,12 +215,10 @@ namespace Diccionario_de_archivos
                                 case 'I'://INT
                                     int datoI = leer.ReadInt32();
                                     REG.Lista_Atributos.Add(datoI);
-                                    i++;
                                     break;
                                 case 'S'://String
                                     string datoS = leer.ReadString(); ;
                                     REG.Lista_Atributos.Add(datoS);
-                                    i++;
                                     break;
                             }
                         }

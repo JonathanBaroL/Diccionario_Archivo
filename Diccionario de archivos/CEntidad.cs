@@ -37,7 +37,6 @@ namespace Diccionario_de_archivos
             }
         }
 
-
         public long Ptr_atrib
         {
             get
@@ -63,7 +62,6 @@ namespace Diccionario_de_archivos
                 ptr_datos = value;
             }
         }
-
 
         public long Prt_ent_sig
         {

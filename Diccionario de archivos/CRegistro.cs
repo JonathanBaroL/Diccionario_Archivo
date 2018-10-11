@@ -8,7 +8,6 @@ namespace Diccionario_de_archivos
 {
     public class CRegistro
     {
-
         private List<object> lista_Atributos;
         private long reg_sig;
         private long reg_dir;
