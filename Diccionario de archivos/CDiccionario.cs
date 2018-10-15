@@ -139,41 +139,6 @@ namespace Diccionario_de_archivos
                 //Console.Write("CASO 2 \n");
             }
         }
-
-        public void Inserta_Registro(CRegistro REG, CEntidad EN, string Name_Reg)
-        {
-            string nombre = " ";
-            int i = 0;
-            while (Name_Reg[i] != ' ')
-            {
-                nombre += Name_Reg[i];
-                Console.Write(Name_Reg[i] + "\n");
-                i++;
-            }
-            nombre += ".dat";
-            Console.Write("Nombre del nuevo registro: " + nombre + "\n");
-
-            if (EN.Ptr_datos == 0 || EN.Lista_Registros.Count() == 1)
-            {
-                Console.Write("CASO 1 de REGISTROS");
-                EN.Ptr_datos = 1; //Si es 1 Quiere decir que ya tiene datos la entidad
-                                  //archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
-                archivo.modifica_ent_sig(EN.Ptr_entidad, Name, EN);
-                REG.Reg_dir = 0;
-                REG.Reg_sig = -1;
-                archivo.creaRegistro(nombre, REG, EN);
-            }
-            else
-            {
-                Console.Write("CASO 2 de REGISTROS " + EN.Lista_Registros.Count());
-                REG.Reg_dir = dimeTamArch(nombre);
-                REG.Reg_sig = -1;
-                int tam = EN.Lista_Registros.Count;
-                EN.Lista_Registros[tam-2].Reg_sig = REG.Reg_dir;
-                Archivo.modifica_reg_sig(EN.Lista_Registros[tam-2].Reg_dir, nombre, EN, EN.Lista_Registros[tam-2]);
-                archivo.insertaRegistro(REG, nombre, EN);
-            }
-        }
         
         public void Inserta_Registro2(CRegistro REG, CEntidad EN, string Name_Reg, int modifica)
         {
@@ -307,14 +272,14 @@ namespace Diccionario_de_archivos
                                     REG.Reg_sig = EN.Lista_Registros[index].Reg_dir;
                                     EN.Lista_Registros[index - 1].Reg_sig = REG.Reg_dir;
                                     index++;
-                                    EN.Lista_Registros.Insert(index - 1, REG);
 
                                     if (modifica == 1)
                                     {
-                                        archivo.modifica_reg_sig(REG.Reg_dir, nombre, EN, REG);
+                                        EN.Lista_Registros.Insert(index - 1, REG);
                                     }
                                     else
                                     {
+                                        EN.Lista_Registros.Insert(index - 1, REG);
                                         archivo.insertaRegistro(REG, nombre, EN);
                                     }
 
@@ -345,11 +310,9 @@ namespace Diccionario_de_archivos
                         else
                         {
                             archivo.insertaRegistro(REG, nombre, EN);
+                            archivo.modifica_reg_sig(REG.Reg_dir, nombre, EN, REG);
+                            archivo.modifica_reg_sig(EN.Lista_Registros[count - 1].Reg_dir, nombre, EN, EN.Lista_Registros[count - 1]);
                         }
-
-
-                        Archivo.modifica_reg_sig(REG.Reg_dir, nombre, EN, REG);
-                        Archivo.modifica_reg_sig(EN.Lista_Registros[count - 1].Reg_dir, nombre, EN, EN.Lista_Registros[count - 1]);
 
                         //MessageBox.Show("caso 4");
                     }
@@ -514,20 +477,8 @@ namespace Diccionario_de_archivos
 
         public void Consulta_Registros(CEntidad EN)
         {
-            string nombre = " ";
-            int i = 0;
-            while (EN.Nombre[i] != ' ')
-            {
-                nombre += EN.Nombre[i];
-                Console.Write(EN.Nombre[i] + "\n");
-                i++;
-            }
-            nombre += ".dat";
-
-
+            string nombre = NombreReg(EN.Nombre);
             archivo.leeRegistros(EN.Ptr_datos, nombre, EN);
-
-
         }
 
         public long dimeTamArch(string NameA)

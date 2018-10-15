@@ -1,8 +1,0 @@
-Beam 7R,12,Lite-Tek,25000
-Head Wash,8,Sunlite,8000
-blinder,3,Lite-Tek,8500
-Cañones par64,10,Lite-Tek,500
-Smoke-machine,2,Lite-Tek,8600
-Clams (Hamburguesas),50,Lite-Tek,250
-ModuloPantalla,8,Mexico,13000
-Beam 5R,6,Generica,18000
