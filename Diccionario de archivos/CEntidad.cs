@@ -16,11 +16,13 @@ namespace Diccionario_de_archivos
         private long ptr_datos;
         private List<CAtributo> lista_Atrb;
         private List<CRegistro> lista_Registros;
+        private List<CIndexP> lista_Indices;
 
         public CEntidad()
         {
             lista_Atrb = new List<CAtributo>();
             Lista_Registros = new List<CRegistro>();
+            lista_Indices = new List<CIndexP>();
             ptr_atrib = -1;
         }
 
@@ -112,6 +114,19 @@ namespace Diccionario_de_archivos
             set
             {
                 lista_Registros = value;
+            }
+        }
+
+        internal List<CIndexP> Lista_Indices
+        {
+            get
+            {
+                return lista_Indices;
+            }
+
+            set
+            {
+                lista_Indices = value;
             }
         }
     }

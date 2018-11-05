@@ -240,6 +240,113 @@ namespace Diccionario_de_archivos
             }
         }
 
+        public void leeIndices(CAtributo atr, string nameArch, CEntidad ENTIDAD)
+        {
+            try
+            {
+                FileStream file = new FileStream(nameArch, FileMode.Open, FileAccess.Read);
+                //MessageBox.Show("Direccion del indice " + atr.Dir_Indice.ToString() + " " + nameArch);
+                file.Seek(atr.Dir_Indice, SeekOrigin.Current);
+                using (BinaryReader leer = new BinaryReader(file))
+                {
+                    //MessageBox.Show("indice  " + atr.Indice.ToString() + " numero de inices   " + ENTIDAD.Lista_Indices.Count.ToString());
+
+                    if (atr.Indice == 2)
+                    {
+                        if (atr.Tipo == 'S')
+                        {
+                            for (int i = 0; i < 27; i++)
+                            {
+                                CIndexP ind = new CIndexP();
+                                long dat = leer.ReadInt64();
+                                ind.DirIndice = dat;
+                                char datoS = leer.ReadChar();
+                                ind.Indice = datoS.ToString();
+                                long dat1 = leer.ReadInt64();
+                                ind.DirRegistros = dat1;
+                                ENTIDAD.Lista_Indices.Add(ind);
+                            }
+                        }
+                        if (atr.Tipo == 'I')
+                        {
+                            for (int i = 0; i < 10; i++)
+                            {
+                                CIndexP ind = new CIndexP();
+                                long dat = leer.ReadInt64();
+                                ind.DirIndice = dat;
+                                char datoS = leer.ReadChar();
+                                ind.Indice = datoS.ToString();
+                                dat = leer.ReadInt64();
+                                ind.DirRegistros = dat;
+                                ENTIDAD.Lista_Indices.Add(ind);
+                            }
+                        }
+                    }
+                    if (atr.Indice == 3)
+                    {
+                        for (int i = 0; i < 50; i++)
+                        {
+                            CIndexP ind = new CIndexP();
+                            long dat = leer.ReadInt64();
+                            ind.DirIndice = dat;
+                            string datoS = leer.ReadString();
+                            ind.Indice = datoS;
+                            dat = leer.ReadInt64();
+                            ind.DirRegistros = dat;
+                            ENTIDAD.Lista_Indices.Add(ind);
+                            //MessageBox.Show("numero de indices   " + ENTIDAD.Lista_Indices.Count.ToString() + " nombre del indice " + ind.Indice.ToString());
+                        }
+                    }
+                }
+                file.Close();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public void leeBloqueP(CEntidad ENTIDAD, string nameArch, int Tam)
+        {
+            foreach(CIndexP idxP in ENTIDAD.Lista_Indices)
+            {
+                if(idxP.DirRegistros != -1)
+                {
+                    try
+                    {
+                        FileStream file = new FileStream(nameArch, FileMode.Open, FileAccess.Read);
+                        file.Seek(idxP.DirRegistros, SeekOrigin.Current);
+                        using (BinaryReader leer = new BinaryReader(file))
+                        {
+                            for(int i = 0; i < 100; i++)
+                            {
+                                CIndexP ind = new CIndexP();
+                                long dat = leer.ReadInt64();
+                                ind.DirIndice = dat;
+                                string datoS = "";
+                                for (int j = 0; j < 30; j++)
+                                {
+                                    datoS += leer.ReadChar();
+                                }
+                               /* string cadena = "";
+                                for(int k = 1; k < Tam; k++)
+                                {
+                                    cadena += datoS[k];
+                                }*/
+                                ind.Indice = datoS;
+                                long dat1 = leer.ReadInt64();
+                                ind.DirRegistros = dat1;
+                                idxP.Lista_IndexP.Add(ind);
+                            }
+                        }
+                        file.Close();
+                    }
+                    catch
+                    {}
+                }
+            }
+        }
+
         public void modifica_reg_sig(long apuntador, string nameArch, CEntidad ENTIDAD, CRegistro REG)
         {
             try
@@ -319,6 +426,44 @@ namespace Diccionario_de_archivos
             }
         }
 
+        public void modifica_Indice(long apuntador, string nameArch, CIndexP indice)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
+                {
+                    escribe.Seek(Convert.ToInt32(apuntador), SeekOrigin.Current);
+                    escribe.Write(indice.DirIndice);
+                    escribe.Write(indice.Indice);
+                    escribe.Write(indice.DirRegistros);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void modifica_IndiceP(long apuntador, string nameArch, CIndexP indice, char abc)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
+                {
+                    escribe.Seek(Convert.ToInt32(apuntador), SeekOrigin.Current);
+                    escribe.Write(indice.DirIndice);
+                    escribe.Write(abc);
+                    escribe.Write(indice.DirRegistros);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         public void modifica_Cab(long dato, string nameArch)
         {
             try
@@ -376,6 +521,82 @@ namespace Diccionario_de_archivos
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void creaIdx(string nameArch)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.OpenOrCreate)))
+                {
+                    escribe.Seek(0, SeekOrigin.Begin);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void agregaidxP(string nameArch, CIndexP indice)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
+                {
+                    escribe.Seek(0, SeekOrigin.End);
+                    escribe.Write(indice.DirIndice);
+                    escribe.Write(indice.Indice);
+                    escribe.Write(indice.DirRegistros);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void agregaidxPB(string nameArch, CIndexP indice, int Tam)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
+                {
+                    escribe.Seek(0, SeekOrigin.End);
+                    escribe.Write(indice.DirIndice);
+                    for (int i = 0; i < 30; i++)
+                    {
+                        escribe.Write(indice.Indice[i]);
+                    }
+                    escribe.Write(indice.DirRegistros);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void agregaidxPp(string nameArch, CIndexP indice, char abc)
+        {
+            try
+            {
+                using (BinaryWriter escribe = new BinaryWriter(new FileStream(nameArch, FileMode.Open)))
+                {
+                    escribe.Seek(0, SeekOrigin.End);
+                    escribe.Write(indice.DirIndice);
+                    escribe.Write(abc);
+                    escribe.Write(indice.DirRegistros);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
             }
         }
 

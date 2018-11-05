@@ -486,11 +486,13 @@ namespace Diccionario_de_archivos
             dataGridView2.Width = 45;
             dataGridView3.Columns.Clear();
             dataGridView3.Width = 45;
+            lbIDX.Text = cBox_Entidades2.Text;
 
             foreach (CEntidad ENT in diccionario_datos.Lista_Ent)
             {
                 if (cBox_Entidades2.Text == ENT.Nombre)
                 {
+                    
                     if (ENT.Lista_Registros.Count() == 0)
                     {
                         
@@ -534,12 +536,13 @@ namespace Diccionario_de_archivos
                      dataGridView3.Width += columna.Width;*/
                     for (int j = 0; j < ENT.Lista_Registros.Count; j++)
                     {
+                        dataGridView3.Rows.Add();
                         for (int i = 0; i < dataGridView3.Columns.Count; i++)
                         {
                             try
                             {
                                 //MessageBox.Show("Registro");
-                                dataGridView3.Rows.Add();
+                                
                                 //dataGridView3.Rows[j].Cells[0].Value = ENT.Lista_Registros[j].Reg_dir;
                                 //MessageBox.Show("paro");
                                 //MessageBox.Show(ENT.Lista_Registros[j].Lista_Atributos[i].ToString());
@@ -1093,9 +1096,19 @@ namespace Diccionario_de_archivos
                     reg.Reg_dir = 0;
                     reg.Reg_sig = -1;
                     ENTIDAD.Ptr_datos = 0;
+
                 }
 
+                // bloque de indices
+                diccionario_datos.Inserta_Indice(ENTIDAD);
+
+                diccionario_datos.InsertaRegOnIdx(ENTIDAD, reg);
+                TabIndices(ENTIDAD);
+
+                // incercion al archivo de registro
                 diccionario_datos.Inserta_Registro2(reg, ENTIDAD, ENTIDAD.Nombre, 0);
+
+
 
                 dataGridView1.Rows.Clear();
                 foreach (CEntidad enti in diccionario_datos.Lista_Ent)
@@ -1106,9 +1119,9 @@ namespace Diccionario_de_archivos
 
                 for (int j = 0; j < ENTIDAD.Lista_Registros.Count; j++)
                 {
+                    dataGridView3.Rows.Add();
                     for (int i = 0; i < dataGridView3.Columns.Count; i++)
                     {
-                        dataGridView3.Rows.Add();
                         dataGridView3.Rows[j].Cells[i].Value = ENTIDAD.Lista_Registros[j].Lista_Atributos[i];
                     }
                 }
@@ -1121,11 +1134,93 @@ namespace Diccionario_de_archivos
             {
                 MessageBox.Show("Rellena los campos");
             }
+        }   
+
+        private void lbIDX_TextChanged(object sender, EventArgs e)
+        {
+
+            dGABC.Rows.Clear();
+            dgClvSec.Rows.Clear();
+            CEntidad ENTIDAD = new CEntidad();
+
+            foreach (CEntidad ENT in diccionario_datos.Lista_Ent)
+            {
+                if (cBox_Entidades2.Text == ENT.Nombre)
+                {
+                    ENTIDAD = ENT;
+                    break;
+                }
+            }
+
+            if (ENTIDAD.Lista_Indices.Count() != 0)
+            {
+                TabIndices(ENTIDAD);
+            }
+            else
+            {
+                foreach (CAtributo atr in ENTIDAD.Lista_Atrb)
+                {
+                    if (atr.Indice == 2)
+                    {
+                        string name = diccionario_datos.NombreIdx(ENTIDAD.Nombre);
+                        diccionario_datos.Archivo.leeIndices(atr, name, ENTIDAD);
+                        diccionario_datos.Archivo.leeBloqueP(ENTIDAD, name, atr.Tamaño);
+                        break;
+                    }
+                }
+                foreach (CAtributo atr in ENTIDAD.Lista_Atrb)
+                {
+                    if (atr.Indice == 3)
+                    {
+                        string name = diccionario_datos.NombreIdx(ENTIDAD.Nombre);
+                        diccionario_datos.Archivo.leeIndices(atr, name, ENTIDAD);
+                        break;
+                    }
+                }
+                if (ENTIDAD.Lista_Indices.Count() != 0)
+                {
+                    TabIndices(ENTIDAD);
+                }
+            }
         }
 
-        private void btnAgregar2_click(object sender, EventArgs e)
+        private void dGABC_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-          
+            try
+            {
+                dgBP.Rows.Clear();
+                string indAux = dGABC.Rows[e.RowIndex].Cells[1].Value.ToString();
+                //MessageBox.Show(indAux);
+                CEntidad ENTIDAD = new CEntidad();
+
+                foreach (CEntidad ENT in diccionario_datos.Lista_Ent)
+                {
+                    if (cBox_Entidades2.Text == ENT.Nombre)
+                    {
+                        ENTIDAD = ENT;
+                        break;
+                    }
+                }
+
+                foreach(CIndexP idxP in ENTIDAD.Lista_Indices)
+                {
+                    //MessageBox.Show(idxP.Indice.ToString() + "   " + indAux);
+                    if(idxP.Indice == indAux)
+                    {
+                        
+                        //MessageBox.Show(idxP.Lista_IndexP.Count.ToString());
+                        for (int i = 0; i < idxP.Lista_IndexP.Count(); i++)
+                        {
+                            dgBP.Rows.Add(idxP.Lista_IndexP[i].DirIndice, idxP.Lista_IndexP[i].Indice, idxP.Lista_IndexP[i].DirRegistros);
+                        }
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         public void pantallaCompleta()
@@ -1138,6 +1233,48 @@ namespace Diccionario_de_archivos
             this.Location = Screen.PrimaryScreen.WorkingArea.Location;
             tabControl1.Width = sw + 310;
             tabControl1.Height = sh + 10;
+        }
+
+        public void TabIndices(CEntidad ENTIDAD)
+        {
+            dgClvSec.Rows.Clear();
+            dGABC.Rows.Clear();
+            //MessageBox.Show(ENTIDAD.Lista_Indices.Count().ToString());
+            foreach (CAtributo atr in ENTIDAD.Lista_Atrb)
+            {
+                if (atr.Indice == 2)
+                {
+                    if (atr.Tipo == 'S')
+                    {
+                        for (int i = 0; i < 27; i++)
+                        {
+                            //dGABC.Rows.Add((i * 16) + i, abc[i], -1);
+                            dGABC.Rows.Add(ENTIDAD.Lista_Indices[i].DirIndice, ENTIDAD.Lista_Indices[i].Indice, ENTIDAD.Lista_Indices[i].DirRegistros);
+                        }
+                    }
+                    if (atr.Tipo == 'I')
+                    {
+                        for (int i = 0; i < 0; i++)
+                        {
+                            dGABC.Rows.Add((i * 16) + i, i, -1);
+                        }
+                    }
+                    break;
+                }
+            }
+            foreach (CAtributo atr in ENTIDAD.Lista_Atrb)
+            {
+                if (atr.Indice == 3)
+                {
+                    int value = 27;
+                    for (int i = 0; i < 50; i++)
+                    {
+                        //dgClvSec.Rows.Add(value + (20 * i), "null", -1);
+                        dgClvSec.Rows.Add(ENTIDAD.Lista_Indices[i + value].DirIndice, ENTIDAD.Lista_Indices[i + value].Indice, ENTIDAD.Lista_Indices[i + value].DirRegistros);
+                    }
+                    break;
+                }
+            }
         }
     }
 }

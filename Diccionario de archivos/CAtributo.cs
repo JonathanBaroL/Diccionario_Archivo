@@ -16,7 +16,6 @@ namespace Diccionario_de_archivos
         private long dir_Indice;
         private long sig_Atributo;
 
-
         public CAtributo()
         {
 
@@ -113,5 +112,6 @@ namespace Diccionario_de_archivos
                 tipo = value;
             }
         }
+        
     }
 }
