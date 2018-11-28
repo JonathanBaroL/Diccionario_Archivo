@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "c:\\Users\\Cristo\\Desktop\\Diccionario_Archivo\\Diccionario de archivos\\Diccionario de archivos\\Diccionario de archivos.csproj",
+  "TargetFramework": "v4.5.2",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}

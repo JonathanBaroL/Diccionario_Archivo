@@ -365,12 +365,13 @@ namespace Diccionario_de_archivos
                         {
                             CIndexP ind = new CIndexP();
                             ind.DirIndice = dimeTamArch(nombre);
-                            string nom = "null                          ";
+                            string cadena = stringVacio(atr.Tamaño);
+                            string nom = cadena;
                             ind.Indice = nom;
                             long dat = -1;
                             ind.DirRegistros = dat;
                             ENT.Lista_Indices.Add(ind);
-                            archivo.agregaidxP(nombre, ind);
+                            archivo.agregaidxPB(nombre, ind, atr.Tamaño);
                         }
                         break;
                     }
@@ -381,6 +382,7 @@ namespace Diccionario_de_archivos
         public void InsertaRegOnIdx(CEntidad ENT, CRegistro REG)
         {
             int pos = 0;
+            string nombreIdx = NombreIdx(ENT.Nombre);
             for (int j = 0; j < ENT.Lista_Atrb.Count(); j++)
             {
                 if (ENT.Lista_Atrb[j].Indice == 2)
@@ -391,8 +393,9 @@ namespace Diccionario_de_archivos
             }
             for (int i = 0; i < 27; i++)
             {
-                string registro = REG.Lista_Atributos[pos].ToString(); 
-                if (registro[0].ToString() == ENT.Lista_Indices[i].Indice)
+                string registro = REG.Lista_Atributos[pos].ToString();
+                string mayuscula = registro[0].ToString().ToUpper();
+                if (mayuscula == ENT.Lista_Indices[i].Indice)
                 {
                     //MessageBox.Show(ENT.Lista_Indices[i].Indice.ToString() + "  " + ENT.Lista_Indices[i].DirRegistros.ToString());
                     if (ENT.Lista_Indices[i].DirRegistros == -1)
@@ -400,16 +403,16 @@ namespace Diccionario_de_archivos
                         for(int j = 0; j < 100; j++)
                         {
                             CIndexP indice = new CIndexP();
-                            string nombreIdx = NombreIdx(ENT.Nombre);
                             long tam = dimeTamArch(nombreIdx);
                             indice.DirIndice = tam;
                             if(j == 0)
                             {
                                 ENT.Lista_Indices[i].DirRegistros = tam;
-                                Archivo.modifica_IndiceP(ENT.Lista_Indices[i].DirIndice, nombreIdx, ENT.Lista_Indices[i], Convert.ToChar(ENT.Lista_Indices[i].Indice));
+                                char abc = ENT.Lista_Indices[i].Indice[0];
+                                Archivo.modifica_IndiceP(ENT.Lista_Indices[i].DirIndice, nombreIdx, ENT.Lista_Indices[i], abc);
                             }
                             string cadena = stringVacio(ENT.Lista_Atrb[pos].Tamaño);
-                            indice.Indice = "                              ";
+                            indice.Indice = cadena;
                             tam = -1;
                             indice.DirRegistros = tam;
                             ENT.Lista_Indices[i].Lista_IndexP.Add(indice);
@@ -421,22 +424,75 @@ namespace Diccionario_de_archivos
                     else
                     {
                         //MessageBox.Show("Ya existe el bloque, ahora se agregara este elemento en el");
-                        int p = 0;
                         foreach(CIndexP indP in ENT.Lista_Indices[i].Lista_IndexP)
                         {
-                            string cadena = stringVacio(ENT.Lista_Atrb[pos].Tamaño);
-                            if (indP.Indice == "                              ")
+                            if (indP.Indice[0].ToString() == " ")
                             {
                                 indP.Indice = registro;
                                 indP.DirRegistros = REG.Reg_dir;
-                                string nombreIdx = NombreIdx(ENT.Nombre);
-                                archivo.modifica_Indice(indP.DirIndice, nombreIdx, indP);
+                                archivo.modifica_Indice(indP.DirIndice, nombreIdx, indP, ENT.Lista_Atrb[pos].Tamaño);
                                 break;
                             }
-                            p++;
                         }
                     }
                     break;
+                }
+            }
+        }
+
+        public void InsertaRegOnIdxS(CEntidad ENT, CRegistro REG)
+        {
+            int pos = 0;
+            string nombreIdx = NombreIdx(ENT.Nombre);
+            for (int j = 0; j < ENT.Lista_Atrb.Count(); j++)
+            {
+                if (ENT.Lista_Atrb[j].Indice == 3)
+                {
+                    pos = j;
+                    break;
+                }
+            }
+            for (int i = 0; i < 50; i++)
+            {
+                string registro = REG.Lista_Atributos[pos].ToString();
+                string compara = "";
+                for(int k = 0; k < ENT.Lista_Atrb[pos].Tamaño - 1; k++)
+                {
+                    compara += ENT.Lista_Indices[i + 27].Indice[k];
+                }
+                if (registro == compara)
+                {
+                    //MessageBox.Show("Ya existe el bloque" + "   Tamaño del bloque = " + ENT.Lista_Indices[i + 27].Lista_IndexP.Count());
+                    foreach(CIndexP idxS in ENT.Lista_Indices[i + 27].Lista_IndexP)
+                    {
+                        if (idxS.DirRegistros == -1)
+                        {
+                            //MessageBox.Show("Direcion del bloque " + ENT.Lista_Indices[i + 27].DirRegistros.ToString());
+                            idxS.DirRegistros = REG.Reg_dir;
+                            archivo.modifica_IndiceS(idxS.DirIndice, nombreIdx, idxS);
+                            break;
+                        }
+                    }
+                    break;
+                }
+                else
+                {
+                    if (ENT.Lista_Indices[i + 27].Indice[0].ToString() == " ")
+                    {
+                        ENT.Lista_Indices[i + 27].Indice = registro;
+                        ENT.Lista_Indices[i + 27].DirRegistros = dimeTamArch(nombreIdx);
+                        archivo.modifica_Indice(ENT.Lista_Indices[i + 27].DirIndice, nombreIdx, ENT.Lista_Indices[i + 27], ENT.Lista_Atrb[pos].Tamaño);
+                        for(int j = 0; j < 50; j++)
+                        {
+                            CIndexP indice = new CIndexP();
+                            indice.DirIndice = dimeTamArch(nombreIdx);
+                            indice.DirRegistros = -1;
+                            ENT.Lista_Indices[i + 27].Lista_IndexP.Add(indice);
+                            archivo.agregaidxS(nombreIdx, indice);
+                        }
+                        InsertaRegOnIdxS(ENT, REG);
+                        break;
+                    }
                 }
             }
         }
@@ -501,34 +557,43 @@ namespace Diccionario_de_archivos
 
         public void Elimina_Registro(CRegistro reg, CEntidad Ent)
         {
-            string nombre = " ";
-            string Name_Reg = Ent.Nombre;
-            int i = 0;
-            while (Name_Reg[i] != ' ')
-            {
-                nombre += Name_Reg[i];
-                //Console.Write(Name_Reg[i] + "\n");
-                i++;
-            }
-            nombre += ".dat";
+            string nombre = NombreReg(Ent.Nombre);
             Console.Write("Registro a eliminar... " + nombre + "\n");
-            Console.Write("Registro a eliminar... " + reg.Lista_Atributos[1].ToString() + "\n");
 
              if (Ent.Ptr_datos == reg.Reg_dir)
              {
                 Ent.Ptr_datos = reg.Reg_sig;
                 archivo.modifica_ent_sig(Ent.Ptr_entidad, name, Ent);
-                Ent.Lista_Registros.Remove(reg);
-                 Console.Write("Exito caso 1\n");
-             }
-             else
+
+                foreach(CRegistro auxreg in Ent.Lista_Registros)
+                {
+                    if (auxreg.Reg_dir == reg.Reg_dir)
+                    {
+                        Ent.Lista_Registros.Remove(auxreg);
+                        break;
+                    }
+                }
+
+
+                /// QUE PASA!!!
+
+                Console.Write("Exito caso 1\n");
+
+            }
+            else
              {
-               
-                int position = Ent.Lista_Registros.IndexOf(reg);
-                Ent.Lista_Registros[position - 1].Reg_sig = reg.Reg_sig;
-                archivo.modifica_reg_sig(Ent.Lista_Registros[position - 1].Reg_dir, nombre, Ent, Ent.Lista_Registros[position - 1]);
-                Ent.Lista_Registros.Remove(reg);
-                Console.Write("Exito caso 2\n");
+                foreach (CRegistro auxreg in Ent.Lista_Registros)
+                {
+                    if (auxreg.Reg_dir == reg.Reg_dir)
+                    {
+                        int position = Ent.Lista_Registros.IndexOf(auxreg);
+                        Ent.Lista_Registros[position - 1].Reg_sig = auxreg.Reg_sig;
+                        archivo.modifica_reg_sig(Ent.Lista_Registros[position - 1].Reg_dir, nombre, Ent, Ent.Lista_Registros[position - 1]);
+                        Ent.Lista_Registros.Remove(auxreg);
+                        Console.Write("Exito caso 2\n");
+                        break;
+                    }
+                }
 
             }
 

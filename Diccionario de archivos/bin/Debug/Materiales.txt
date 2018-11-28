@@ -1,0 +1,200 @@
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Tornillos,5,456,EEUU
+Tuercas,3,5632,EEUU
+Pernos,15,678,Alemania
+Arandelas,3,1098,Francia
+Clavos,2,792,Mexico
+Martillos,125,327,EEUU
+Pinzas,85,459,Italia
+Tenazas,118,760,EEUU
+Destornilladores,132,1098,Gran Bretaña
+Llaves Allen,185,218,EEUU
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Limas,65,219,Gran Bretaña
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia
+Compresora,1860,18,Mexico
+Linterna,185,185,Mexico
+Multicontacto,142,58,Francia
+Taquete,3,458,Alemania
+Taladro,1230,32,Italia

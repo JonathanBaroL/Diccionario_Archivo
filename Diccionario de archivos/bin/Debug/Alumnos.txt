@@ -1,0 +1,17 @@
+3412,Karla,Ingenieria
+3413,Israel,Ingenieria
+8652,Jonathan,Ingenieria
+8654,Efra,Ingenieria
+8655,Granja,Ingenieria
+8656,Ricardo,Ingenieria
+8659,Ivan,Medicina
+8657,Karen,Ingenieria
+8691,Morin,Derecho
+8692,Dennis,Derecho
+8693,Daniel,Medicina
+8694,Zazil,Ingenieria
+8698,Ever,Ingenieria
+8972,Oscar,Medicina
+8971,Manuel,Derecho
+8973,Jorge,Medicina
+9843,Odete,Ingenieria
